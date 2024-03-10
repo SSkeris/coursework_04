@@ -27,17 +27,11 @@ def cls_to_dict(data: list) -> list:
     return new_list
 
 
-def open_file():
-    """Распаковывает json файл для выборки пользователя"""
-    with open('hh_response.json', 'r', encoding='utf-8') as f:
-        return json.load(f)
-
-
 def filter_vacancies(dict_list: list, filter_words) -> list:
     """Получает список и фильтрует его по критерию пользователя, возвращает список"""
     new_list = []
     for d in dict_list:
-        for word in filter_words:
+        for word in filter_words.split():
             if d['name'].find(word) != -1:
                 new_list.append(d)
         if not filter_words:
@@ -53,7 +47,8 @@ def get_by_salary(dict_list, salary):
     for i in dict_list:
         if (i['salary_from'] + i['salary_to']) / 2 >= salary:
             new_list.append(i)
-    return new_list
+    sorted_list = sorted(new_list, key=lambda d: (d['salary_from'] + d['salary_to']) / 2, reverse=True)
+    return sorted_list
 
 
 def get_top_vacancies(dict_list, number):

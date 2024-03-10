@@ -29,7 +29,7 @@ class VacancyHH(Vacancy):
         self.job = job
         salary = job['salary']
 
-        self.name = job['name']
+        self.name = job['name'].lower()
         self.experience = str(job['experience']['name'])
         self.employment = job['employment']['name']
         self.place = job['schedule']['name']
