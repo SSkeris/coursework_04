@@ -19,7 +19,8 @@ def user_interaction():
     filter_words = input("Введите ключевые слово для фильтрации вакансий: ").lower()
     filtered_vacancies = filter_vacancies(data_list, filter_words)  # фильтруем по слову
     print_vacancies(filtered_vacancies)  # вывод результата
-    salary_range = input("Введите диапазон зарплат: ")
+    salary_range = input("Введите диапазон зарплат\n(формат: 'число пробел число' для диапазона, "
+                         "\nодно число для начального значения): ")
     ranged_vacancies = get_by_salary(filtered_vacancies, salary_range)  # отбираем по ЗП
     print_vacancies(ranged_vacancies)  # вывод результата
     top_n = 0

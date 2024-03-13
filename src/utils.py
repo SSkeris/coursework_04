@@ -41,33 +41,28 @@ def filter_vacancies(dict_list: list, filter_words) -> list:
 
 def get_by_salary(dict_list, salary):
     """Выбирает словари, где средняя зарплата больше или равна запросу"""
-    if not isinstance(salary, int):
-        salary = 0
     new_list = []
-    for i in dict_list:
-        if (i['salary_from'] + i['salary_to']) / 2 >= salary:
-            new_list.append(i)
-    sorted_list = sorted(new_list, key=lambda d: (d['salary_from'] + d['salary_to']) / 2, reverse=True)
-    return sorted_list
+    try:
+        from_s, to_s = salary.split()
+        for i in dict_list:
+            if int(from_s) <= (i['salary_from'] + i['salary_to']) / 2 <= int(to_s):
+                new_list.append(i)
+        sorted_list = sorted(new_list, key=lambda d: (d['salary_from'] + d['salary_to']) / 2, reverse=True)
+        return sorted_list
+    except:
+        for i in dict_list:
+            if (i['salary_from'] + i['salary_to']) / 2 >= int(salary):
+                new_list.append(i)
+        sorted_list = sorted(new_list, key=lambda d: (d['salary_from'] + d['salary_to']) / 2, reverse=True)
+        return sorted_list
 
 
 def get_top_vacancies(dict_list, number):
     """Выбирает N вакансий из списка словарей"""
     new_list = []
-    count = 0
-    if number is not None:
-        try:
-            for d in dict_list:
-                if count >= number:
-                    break
-                else:
-                    count += 1
-                    new_list.append(d)
-            return new_list
-        except:
-            return new_list
-    else:
-        return dict_list
+    for d in dict_list[0:number]:
+        new_list.append(d)
+    return new_list
 
 
 def print_vacancies(dict_list):
